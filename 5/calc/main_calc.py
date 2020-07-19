@@ -1,5 +1,4 @@
-from calc import div, add, mul, sub
-import random
+from . import div, add, mul, sub
 
 if __name__ == '__main__':
     div.div(1,3)
