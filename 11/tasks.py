@@ -27,8 +27,8 @@ class TodoList:
         self.name = name
         self.owner = owner
         self.dead_line = dead_line
-        self.tasks = self.load_tasks()
         self.file_name = 'tasks.json'
+        self.tasks = self.load_tasks()
 
     def load_tasks(self):
         try:
@@ -65,6 +65,9 @@ class TodoList:
     def add_task(self, task):
         self.tasks.append(task)
 
+    def get_task_index(self, task):
+        return self.tasks.index(task)
+
     def to_json(self):
         with open(self.file_name, 'w') as file:
             tasks = []
@@ -73,16 +76,26 @@ class TodoList:
             json.dump(tasks, file)
 
 
-"""
-Создать класс воина, создать 2 или больше объектов воина с соответствующими воину атрибутами. Реализовать методы, 
-которые позволять добавить силы воину, улучшить оружие. Реализовать возможность драки 2х воинов с потерей здоровья, 
-приобретения опыта.
-"""
+def init_todo_list():
+    list_name = input('list_name')
+    owner = input('owner')
+    return TodoList(list_name, owner, None)
 
-"""
-Реализовать класс Банкомат, у которого есть баланс. Банкомат может выдавать деньги и принимать платежи.
 
-Банкомат не может уйти в минус и не может обрабатывать отрицательные сумму.
+#  TODO rafactor me))))
+def main():
+    todo_list = init_todo_list()
+    while True:
+        action = input('action какие экшены')
+        if action == 'a':
+            done = input('1 or 0')
+            if done not in {'1', '0'}:
+                continue
+            done = bool(int(done))
+            info = input('Some info')
+            todo_list.add_task(Item(done, info, None))
+        print(todo_list.tasks)
 
-Лимит на  
-"""
+
+if __name__ == '__main__':
+    main()
