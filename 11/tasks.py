@@ -5,6 +5,9 @@
 При запуске программы должна появится меню с вариантами действий: добавить в список, вывести весь список, вывести
 список не сделанных дел, отметить как сделаное
 """
+
+# isodate
+# iso8601
 import json
 
 
@@ -21,18 +24,21 @@ class Item:
             'last_updated': str(self.last_updated),
         }
 
+    def __repr__(self):
+        return self.info
+
 
 class TodoList:
     def __init__(self, name, owner, dead_line):
         self.name = name
         self.owner = owner
         self.dead_line = dead_line
-        self.file_name = 'tasks.json'
+        # self.file_name = 'tasks.json'
         self.tasks = self.load_tasks()
 
     def load_tasks(self):
         try:
-            with open(self.file_name, 'r') as file:
+            with open(f'{self.name}.json', 'r') as file:
                 data = json.load(file)
                 tasks = []
                 for item in data:
@@ -69,11 +75,11 @@ class TodoList:
         return self.tasks.index(task)
 
     def to_json(self):
-        with open(self.file_name, 'w') as file:
+        with open(f'{self.name}.json', 'w') as file:
             tasks = []
             for task in self.tasks:
                 tasks.append(task.as_dict())
-            json.dump(tasks, file)
+            json.dump(tasks, file, indent=4)
 
 
 def init_todo_list():
@@ -82,19 +88,30 @@ def init_todo_list():
     return TodoList(list_name, owner, None)
 
 
-#  TODO rafactor me))))
 def main():
     todo_list = init_todo_list()
-    while True:
-        action = input('action какие экшены')
-        if action == 'a':
-            done = input('1 or 0')
-            if done not in {'1', '0'}:
-                continue
-            done = bool(int(done))
-            info = input('Some info')
-            todo_list.add_task(Item(done, info, None))
-        print(todo_list.tasks)
+    try:
+        while True:
+            action = input('action какие экшены')
+            if action == 'a':
+                done = input('1 or 0')
+                if done not in {'1', '0'}:
+                    continue
+                done = bool(int(done))
+                info = input('Some info')
+                todo_list.add_task(Item(done, info, None))
+            elif action == 'tasks':
+                print(todo_list.tasks_list)
+            elif action == 'tasks_not_ready':
+                print(todo_list.not_ready_tasks)
+            elif action == 'done_task':
+                index = int(input('index'))
+                todo_list.done_task(index)
+            elif action == 'exit':
+                todo_list.to_json()
+                return
+    except Exception:
+        todo_list.to_json()
 
 
 if __name__ == '__main__':
