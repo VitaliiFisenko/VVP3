@@ -8,7 +8,9 @@
 
 # isodate
 # iso8601
+import datetime
 import json
+
 
 
 class Item:
@@ -63,10 +65,14 @@ class TodoList:
         return tasks
 
     def done_task(self, index):
-        self.tasks[index].done = True
+        task = self.tasks[index]
+        task.done = True
+        task.last_updated = datetime.datetime.now()
 
     def undone_task(self, index):
-        self.tasks[index].done = False
+        task = self.tasks[index]
+        task.done = False
+        task.last_updated = datetime.datetime.now()
 
     def add_task(self, task):
         self.tasks.append(task)
@@ -99,7 +105,7 @@ def main():
                     continue
                 done = bool(int(done))
                 info = input('Some info')
-                todo_list.add_task(Item(done, info, None))
+                todo_list.add_task(Item(done, info, datetime.datetime.now()))
             elif action == 'tasks':
                 print(todo_list.tasks_list)
             elif action == 'tasks_not_ready':
