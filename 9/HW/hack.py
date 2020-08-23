@@ -17,6 +17,12 @@ def extract_archive(file_to_open, password):
         return False
 
 
+def build_pass():
+    empty = ''
+    for _ in range(PASSWORD_LENGTH):
+        empty += random.choice(string.digits)
+    return empty
+
 def hack_archive(file_name):
     """
     Функция брутфорсит запароленный архив

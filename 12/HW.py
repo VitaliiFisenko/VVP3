@@ -73,6 +73,7 @@ class Tale:
         self.babka = babka
         self.ded = ded
         self.colobok = None
+        self.animals = []
 
     def babkin_dom(self):
         self.ded.tel_babka_about_colobok()
@@ -80,6 +81,12 @@ class Tale:
 
     def start(self):
         self.babkin_dom()
+        for animal in self.animals:
+            animal.eatc_colobock()
+            if isinstance(animal, Fox):
+                #  Действия с лисой
+                return
+            self.colobok.rool_out()
 
 
 my_tail = Tale('L', ';')

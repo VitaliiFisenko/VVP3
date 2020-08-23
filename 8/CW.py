@@ -9,15 +9,15 @@
 # # print(ATTEMPS)
 #
 # #  lambda
-#
-# func = lambda a: a * a  # так плохо
-#
-# some_array = [1, 2, 3, 4, 5]
-#
-# out = list(map(lambda i: i * i, some_array))
-#
-# out = [i * i for i in some_array]
-# # print(out)
+
+func = lambda a: a * a  # так плохо
+
+some_array = [1, 2, 3, 4, 5]
+
+out = list(map(lambda i: i * i, some_array))
+
+out = [i * i for i in some_array]
+# print(out)
 #
 # """
 # 2
