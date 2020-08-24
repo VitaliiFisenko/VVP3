@@ -140,11 +140,78 @@ class linked_list2:
                 return obj
 
 
-l = linked_list2()
-l.inset_at_end(1)
-print(l.objects)
-l.inset_at_end(2)
-print(l.objects)
-l.inset_at_head(3)
-print(l.objects)
-print(l.search(2))
+# l = linked_list2()
+# l.inset_at_end(1)
+# print(l.objects)
+# l.inset_at_end(2)
+# print(l.objects)
+# l.inset_at_head(3)
+# print(l.objects)
+# print(l.search(2))
+
+
+class Element:
+    def __init__(self, value, link):
+        self.value = value
+        self.link = link
+
+    def __str__(self):
+        return f'Value {self.value} --> link {self.link}'
+
+
+class LinkedList:
+    def __init__(self, data):
+        self.data = data
+
+    def insert_at_end(self, value):
+        if len(self.data) == 0:
+            self.data.append(Element(value, value))
+            return
+        self.data[-1].link = value
+        self.data.append(Element(value, self.data[0].value))
+
+    def insert_at_head(self, value):
+        if len(self.data) == 0:
+            self.data.append(Element(value, value))
+            return
+        self.data[-1].link = value
+        self.data.insert(0, Element(value, self.data[0].value))
+
+    def delete(self, index):
+        self.data[index - 1].link = self.data[index].link
+        self.data.pop(index)
+
+    def delete_head(self):
+        self.data.pop(0)
+        self.data[-1].link = self.data[0].value
+
+    def search(self, index):
+        return self.data[index]
+
+    def is_empty(self):
+        return not bool(len(self.data))
+
+    def __str__(self):
+        return str([str(el) for el in self.data])
+
+
+my_list = LinkedList([])
+
+my_list.insert_at_end(1)
+print(my_list)
+my_list.insert_at_head(3)
+print(my_list)
+my_list.insert_at_head(5)
+print(my_list)
+my_list.insert_at_end(6)
+print(my_list)
+my_list.insert_at_end(4)
+print(my_list)
+my_list.delete_head()
+print(my_list)
+my_list.delete(1)
+print(my_list)
+my_list.delete_head()
+print(my_list)
+my_list.delete_head()
+print(my_list)
